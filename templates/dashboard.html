@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>SHIELD - لوحة بيانات المريض</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f2f5; margin: 0; padding: 20px; }
+        .header { background: white; padding: 15px; border-radius: 15px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 20px; }
+        .logo-section { display: flex; align-items: center; }
+        .logo-img { height: 60px; margin-left: 15px; }
+        .patient-card { background: white; border-radius: 15px; padding: 25px; box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+        .alert-box { background: #fff5f5; border-right: 5px solid #d9534f; padding: 15px; margin: 15px 0; border-radius: 8px; color: #c53030; font-weight: bold; }
+        .protocol-box { background: #f0fff4; border-right: 5px solid #38a169; padding: 15px; border-radius: 8px; color: #276749; margin-top: 20px; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .info-item { border-bottom: 1px solid #edf2f7; padding: 10px 0; }
+        .label { color: #718096; font-size: 14px; }
+        .value { color: #2d3748; font-weight: 600; font-size: 18px; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="logo-section">
+            <h1 style="color: #d9534f; margin: 0;">SHIELD Dashboard</h1>
+        </div>
+        <div style="text-align: left;">
+            <span style="background: #e2e8f0; padding: 5px 15px; border-radius: 20px; font-size: 14px;">نظام الربط مع SRCA CAD</span>
+        </div>
+    </div>
+
+    <div class="patient-card">
+        <h2 style="border-bottom: 2px solid #d9534f; padding-bottom: 10px;">بيانات المريض من منصة Nphies</h2>
+        
+        <div class="grid">
+            <div class="info-item"><div class="label">الاسم الكامل</div><div class="value">{{ p[1] }}</div></div>
+            <div class="info-item"><div class="label">رقم الهوية</div><div class="value">{{ p[0] }}</div></div>
+            <div class="info-item"><div class="label">العمر / الجنس</div><div class="value">{{ p[2] }} سنة - {{ p[3] }}</div></div>
+            <div class="info-item"><div class="label">فصيلة الدم</div><div class="value" style="color: #d9534f;">{{ p[4] }}</div></div>
+        </div>
+
+        {% if p[7] != 'None' %}
+        <div class="alert-box">
+            ⚠️ تنبيه الحساسية (Allergies): {{ p[7] }}
+        </div>
+        {% endif %}
+
+        <div style="margin-top: 20px;">
+            <h3 style="color: #2d3748;">الملاحظات السريرية (Clinical Notes):</h3>
+            <p><strong>الأمراض المزمنة:</strong> {{ p[6] }}</p>
+            <p><strong>الأدوية الحالية:</strong> {{ p[8] }}</p>
+            <p style="color: #c53030;"><strong>موانع الاستخدام (Contraindications):</strong> {{ p[9] }}</p>
+        </div>
+
+        <div class="protocol-box">
+            <h3>البروتوكول الإسعافي المقترح (Protocol):</h3>
+            <p>{{ p[10] }}</p>
+        </div>
+
+        <button onclick="window.location.href='/'" style="margin-top: 30px; background: #718096; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer;">رجوع للبحث</button>
+    </div>
+
+</body>
+</html>
