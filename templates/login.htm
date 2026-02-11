@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SHIELD - Identification</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #f4f7f9; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .card { background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); width: 400px; text-align: center; }
+        .logo-img { height: 120px; margin-bottom: 20px; }
+        input { width: 100%; padding: 12px; border: 1px solid #cbd5e0; border-radius: 8px; margin-top: 10px; box-sizing: border-box; }
+        .btn { background: #d9534f; color: white; border: none; padding: 12px; border-radius: 8px; width: 100%; cursor: pointer; font-weight: bold; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2 style="color: #d9534f;">🛡️ SHIELD SYSTEM</h2>
+        <p>Identify Patient via Nphies/CAD</p>
+        <form action="/dashboard" method="post">
+            <input type="text" name="patient_id" placeholder="Enter National ID (e.g. 1033331223)" required>
+            <button type="submit" class="btn">SEARCH SYSTEM</button>
+        </form>
+    </div>
+</body>
+</html>
