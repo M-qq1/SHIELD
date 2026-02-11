@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #eef2f7; margin: 0; padding: 20px; display: grid; grid-template-columns: 350px 1fr 400px; gap: 20px; }
+        .box { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .header-status { background: #d9534f; color: white; padding: 15px; border-radius: 10px; grid-column: span 3; display: flex; justify-content: space-between; font-weight: bold; }
+        .alert-zone { background: #fff5f5; border: 1px solid #fc8181; padding: 15px; border-radius: 12px; color: #c53030; margin-bottom: 15px; }
+        h4 { color: #4a5568; font-size: 11px; text-transform: uppercase; border-bottom: 1px solid #edf2f7; padding-bottom: 5px; margin-top: 0; }
+        .data-item { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 14px; }
+        .label { color: #718096; }
+        .val { font-weight: bold; color: #2d3748; }
+        .contra-box { background: #1a202c; color: #fbd38d; padding: 10px; border-radius: 8px; font-size: 13px; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <div class="header-status">
+        <span>🚨 SHIELD EMERGENCY - HIGH PRIORITY</span>
+        <div id="liveClock">Loading...</div>
+    </div>
+
+    <div class="box">
+        <h4>📍 Incident Location</h4>
+        <p style="font-size: 14px;">King Fahd Road, Al Olaya District<br>Riyadh, Saudi Arabia</p>
+        <hr>
+        <h4>📞 Dispatch Info</h4>
+        <div class="data-item"><span class="label">Priority</span><span class="val" style="color:red">Code 3</span></div>
+        <div class="data-item"><span class="label">Complaint</span><span class="val">Acute Distress</span></div>
+    </div>
+
+    <div class="box">
+        <h4>👤 Patient Information</h4>
+        <div class="data-item"><span class="label">Name</span><span class="val">{{ p[1] }}</span></div>
+        <div class="data-item"><span class="label">Age / Gender</span><span class="val">{{ p[2] }} / {{ p[3] }}</span></div>
+        <div class="data-item"><span class="label">Blood Type</span><span class="val">{{ p[4] }}</span></div>
+        <div class="data-item"><span class="label">Insurance</span><span class="val" style="color:green">{{ p[5] }}</span></div>
+        <hr>
+        <h4>📜 Chronic Conditions</h4>
+        <p class="val">{{ p[6] }}</p>
+    </div>
+
+    <div>
+        <div class="alert-zone">
+            <h4>⚠️ Critical Alerts</h4>
+            <p><strong>Allergies:</strong> {{ p[7] }}</p>
+            <div class="contra-box">🚫 CONTRAINDICATIONS: {{ p[9] }}</div>
+        </div>
+        <br>
+        <div class="box">
+            <h4>🩺 Suggested Protocol</h4>
+            <p style="color: #d9534f; font-weight: bold; font-size: 15px;">{{ p[10] }}</p>
+            <hr>
+            <h4>💊 Current Medications</h4>
+            <p class="val" style="font-size: 13px;">{{ p[8] }}</p>
+        </div>
+    </div>
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+            document.getElementById('liveClock').innerHTML = "TIME: " + now.toLocaleTimeString();
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+</body>
+</html>
