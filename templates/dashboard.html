@@ -3,115 +3,138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SHIELD | Patient Dashboard</title>
+    <title>SHIELD Dashboard - Emergency Mode</title>
     <style>
         :root {
-            --primary: #e63946; /* لون الطوارئ */
-            --secondary: #1d3557;
-            --accent: #457b9d;
-            --bg: #f8f9fa;
+            --emergency-red: #e63946;
+            --dark-blue: #1d3557;
+            --accent-blue: #457b9d;
+            --white: #ffffff;
+            --light-gray: #f8f9fa;
         }
-        body { font-family: 'Inter', sans-serif; background: var(--bg); margin: 0; color: #333; }
+        body { font-family: 'Inter', sans-serif; background: #f0f2f5; margin: 0; padding: 0; }
         
-        /* الهيدر */
-        .top-nav {
-            background: var(--secondary);
-            padding: 15px 5%;
+        /* شريط التنبيه العلوي */
+        .emergency-header {
+            background: var(--emergency-red);
+            color: white;
+            padding: 15px 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            color: white;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
-        /* حاوية البيانات */
-        .container { padding: 30px 5%; display: grid; grid-template-columns: 1fr 2fr; gap: 25px; }
-
-        .card {
-            background: white;
-            border-radius: 20px;
+        /* حاوية الأقسام الرئيسية */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1.2fr;
+            gap: 20px;
             padding: 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        .glass-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.04);
             border: 1px solid #edf2f7;
         }
 
-        .status-badge {
-            background: #fff5f5;
-            color: var(--primary);
-            padding: 12px;
-            border-radius: 12px;
-            text-align: center;
-            font-weight: 800;
-            border: 2px solid var(--primary);
+        .section-header {
+            font-size: 0.85rem;
+            color: #a0aec0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
             margin-bottom: 20px;
-            animation: pulse 2s infinite;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid #f1f1f1;
+            padding-bottom: 10px;
         }
 
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.6; }
-            100% { opacity: 1; }
+        /* تفاصيل البيانات */
+        .info-block { margin-bottom: 15px; }
+        .info-label { color: #718096; font-size: 0.9rem; }
+        .info-value { font-weight: 700; color: #2d3748; font-size: 1.1rem; }
+
+        /* تنبيهات حرجة */
+        .alert-box {
+            background: #fff5f5;
+            border: 1px solid #feb2b2;
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+        .alert-item { color: #c53030; font-weight: bold; margin-bottom: 5px; }
+
+        /* البروتوكول */
+        .protocol-box {
+            background: #f0f4f8;
+            border-right: 5px solid var(--accent-blue);
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 15px;
         }
 
-        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .label { color: #8898aa; font-size: 0.85rem; margin-bottom: 5px; }
-        .data { font-weight: 600; color: #32325d; font-size: 1.1rem; }
-
-        .btn-back {
-            background: #f1f5f9;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: 0.3s;
-        }
-        .btn-back:hover { background: #e2e8f0; }
-
-        /* موبايل */
-        @media (max-width: 768px) {
-            .container { grid-template-columns: 1fr; }
+        @media (max-width: 1024px) {
+            .main-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
-<nav class="top-nav">
-    <div style="display: flex; align-items: center; gap: 15px;">
-        <img src="{{ url_for('static', filename='logo.png') }}" width="50">
-        <h2 style="margin: 0; font-size: 1.2rem;">SHIELD EMERGENCY</h2>
+<div class="emergency-header">
+    <div style="display: flex; align-items: center; gap: 10px;">
+        <img src="{{ url_for('static', filename='logo.png') }}" width="40">
+        <span>SHIELD EMERGENCY CALL #ER-2026-0119</span>
     </div>
-    <div>{{ time }} | Live Data</div>
-</nav>
-
-<div class="container">
-    <div class="card">
-        <div class="status-badge">🚨 CRITICAL CONDITION</div>
-        <div class="info-grid">
-            <div><div class="label">ID Number</div><div class="data">1098765432</div></div>
-            <div><div class="label">Blood Type</div><div class="data">+A</div></div>
-        </div>
-        <hr style="margin: 20px 0; border: 0; border-top: 1px solid #eee;">
-        <div class="label">Clinical Notes:</div>
-        <p class="data">Asthma, GERD</p>
+    <div style="background: rgba(255,255,255,0.2); padding: 5px 15px; border-radius: 20px;">
+        High Priority | {{ time }}
     </div>
+</div>
 
-    <div class="card">
-        <h3 style="color: var(--secondary); margin-top: 0;">📋 Proposed Rescue Protocol</h3>
-        <div style="background: #fdfdfd; border-right: 5px solid var(--accent); padding: 15px; border-radius: 8px;">
-            <p style="line-height: 1.6;">Salbutamol Nebulizer, Monitor SpO2, Oxygen Therapy as per Protocol 4-B.</p>
-        </div>
+<div class="main-grid">
+    <div class="glass-card">
+        <div class="section-header">📍 Incident Location</div>
+        <p><strong>King Fahd Road, Al Olaya District</strong><br>Riyadh 12214, Saudi Arabia</p>
         
-        <h3 style="color: var(--secondary); margin-top: 25px;">👤 Patient Bio</h3>
-        <div class="info-grid">
-            <div><div class="label">Full Name</div><div class="data">Abdulaziz Al-Saad</div></div>
-            <div><div class="label">Age / Gender</div><div class="data">45 / Male</div></div>
+        <div class="section-header" style="margin-top: 30px;">📄 Caller Report</div>
+        <p style="color: #4a5568;">Male, approximately 45 years old. Experiencing severe chest pain and difficulty breathing.</p>
+        
+        <button onclick="location.href='/'" style="width: 100%; margin-top: 20px; padding: 10px; border-radius: 8px; border: 1px solid #ddd; cursor: pointer;">← New Search</button>
+    </div>
+
+    <div class="glass-card">
+        <div class="section-header">👤 Patient Information (Nphies Data)</div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div class="info-block"><div class="info-label">Full Name</div><div class="info-value">{{ patient.name }}</div></div>
+            <div class="info-block"><div class="info-label">National ID</div><div class="info-value">1098765432</div></div><div class="info-block"><div class="info-label">Age / Gender</div><div class="info-value">{{ patient.age }} / {{ patient.gender }}</div></div>
+            <div class="info-block"><div class="info-label">Blood Type</div><div class="info-value">{{ patient.blood }}</div></div>
         </div>
 
-        <div style="margin-top: 30px; display: flex; justify-content: space-between;">
-            <button class="btn-back" onclick="location.href='/'">← New Search</button>
-            <span style="color: #999; font-size: 0.8rem;">Powered by Nphies AI</span>
+        <div class="section-header" style="margin-top: 30px;">🩺 Suggested Treatment Protocol</div>
+        <div class="protocol-box">
+            <p style="font-weight: bold; color: var(--dark-blue);">Suspected Cardiac Event / Respiratory Distress</p>
+            <p>{{ patient.protocol }}</p>
         </div>
+    </div>
+
+    <div class="glass-card">
+        <div class="section-header">⚠️ Critical Alerts</div>
+        <div class="alert-box">
+            <div class="alert-item">● Allergies: Penicillin, Aspirin</div>
+            <div class="alert-item">● Chronic: Hypertension, Type 2 Diabetes</div>
+        </div>
+
+        <div class="section-header" style="margin-top: 30px;">📋 Medical History</div>
+        <ul style="color: #4a5568; line-height: 1.8;">
+            <li>Appendectomy (2018)</li>
+            <li>Knee Arthroscopy (2021)</li>
+            <li>Chest Pain (Nov 2024)</li>
+        </ul>
     </div>
 </div>
 
