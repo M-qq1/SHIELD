@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 import sqlite3
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -18,7 +19,7 @@ def index():
     return render_template('login.html')
 
 # 2. صفحة البيانات الكبرى (Dashboard)
-@app.route('/dashboard', methods=['POST'])
+@app.route('/dashboard', methods=['GET', 'POST'])
 def dashboard():
     p_id = request.form.get('patient_id')
     patient_data = get_patient(p_id)
