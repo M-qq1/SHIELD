@@ -1,63 +1,77 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>SHIELD - لوحة بيانات المريض</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f2f5; margin: 0; padding: 20px; }
-        .header { background: white; padding: 15px; border-radius: 15px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 20px; }
-        .logo-section { display: flex; align-items: center; }
-        .logo-img { height: 60px; margin-left: 15px; }
-        .patient-card { background: white; border-radius: 15px; padding: 25px; box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
-        .alert-box { background: #fff5f5; border-right: 5px solid #d9534f; padding: 15px; margin: 15px 0; border-radius: 8px; color: #c53030; font-weight: bold; }
-        .protocol-box { background: #f0fff4; border-right: 5px solid #38a169; padding: 15px; border-radius: 8px; color: #276749; margin-top: 20px; }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .info-item { border-bottom: 1px solid #edf2f7; padding: 10px 0; }
-        .label { color: #718096; font-size: 14px; }
-        .value { color: #2d3748; font-weight: 600; font-size: 18px; }
+        body { font-family: 'Segoe UI', sans-serif; background: #eef2f7; margin: 0; padding: 20px; display: grid; grid-template-columns: 350px 1fr 400px; gap: 20px; }
+        .box { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .header-status { background: #d9534f; color: white; padding: 15px; border-radius: 10px; grid-column: span 3; display: flex; justify-content: space-between; font-weight: bold; }
+        .alert-zone { background: #fff5f5; border: 1px solid #fc8181; padding: 15px; border-radius: 12px; color: #c53030; margin-bottom: 15px; }
+        h4 { color: #4a5568; font-size: 11px; text-transform: uppercase; border-bottom: 1px solid #edf2f7; padding-bottom: 5px; margin-top: 0; }
+        .data-item { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 14px; }
+        .label { color: #718096; }
+        .val { font-weight: bold; color: #2d3748; }
+        .contra-box { background: #1a202c; color: #fbd38d; padding: 10px; border-radius: 8px; font-size: 13px; margin-top: 10px; }
     </style>
 </head>
 <body>
+    <div class="header-status">
+        <span>🚨 SHIELD EMERGENCY - HIGH PRIORITY</span>
+        <div id="liveClock">Loading...</div>
+    </div>
 
-    <div class="header">
-        <div class="logo-section">
-            <h1 style="color: #d9534f; margin: 0;">SHIELD Dashboard</h1>
+    <div class="box">
+        <h4>📍 Incident Location</h4>
+        <p style="font-size: 14px;">King Fahd Road, Al Olaya District<br>Riyadh, Saudi Arabia</p>
+        <hr>
+        <h4>📞 Dispatch Info</h4>
+        <div class="data-item"><span class="label">Priority</span><span class="val" style="color:red">Code 3</span></div>
+        <div class="data-item"><span class="label">Complaint</span><span class="val">Acute Distress</span></div>
+    </div>
+
+    <div class="box">
+        <h4>👤 Patient Information</h4>
+        <div class="data-item"><span class="label">Name</span><span class="val">{{ p[1] }}</span></div>
+        <div class="data-item"><span class="label">Age / Gender</span><span class="val">{{ p[2] }} / {{ p[3] }}</span></div>
+        <div class="data-item"><span class="label">Blood Type</span><span class="val">{{ p[4] }}</span></div>
+        <div class="data-item"><span class="label">Insurance</span><span class="val" style="color:green">{{ p[5] }}</span></div>
+        <hr>
+        <h4>📜 Chronic Conditions</h4>
+        <p class="val">{{ p[6] }}</p>
+    </div>
+
+    <div>
+        <div class="alert-zone">
+            <h4>⚠️ Critical Alerts</h4>
+            <p><strong>Allergies:</strong> {{ p[7] }}</p>
+            <div class="contra-box">🚫 CONTRAINDICATIONS: {{ p[9] }}</div>
         </div>
-        <div style="text-align: left;">
-            <span style="background: #e2e8f0; padding: 5px 15px; border-radius: 20px; font-size: 14px;">نظام الربط مع SRCA CAD</span>
+        <br>
+        <div class="box">
+            <h4>🩺 Suggested Protocol</h4>
+            <p style="color: #d9534f; font-weight: bold; font-size: 15px;">{{ p[10] }}</p>
+            <hr>
+            <h4>💊 Current Medications</h4>
+            <p class="val" style="font-size: 13px;">{{ p[8] }}</p>
         </div>
     </div>
 
-    <div class="patient-card">
-        <h2 style="border-bottom: 2px solid #d9534f; padding-bottom: 10px;">بيانات المريض من منصة Nphies</h2>
-        
-        <div class="grid">
-            <div class="info-item"><div class="label">الاسم الكامل</div><div class="value">{{ p[1] }}</div></div>
-            <div class="info-item"><div class="label">رقم الهوية</div><div class="value">{{ p[0] }}</div></div>
-            <div class="info-item"><div class="label">العمر / الجنس</div><div class="value">{{ p[2] }} سنة - {{ p[3] }}</div></div>
-            <div class="info-item"><div class="label">فصيلة الدم</div><div class="value" style="color: #d9534f;">{{ p[4] }}</div></div>
-        </div>
-
-        {% if p[7] != 'None' %}
-        <div class="alert-box">
-            ⚠️ تنبيه الحساسية (Allergies): {{ p[7] }}
-        </div>
-        {% endif %}
-
-        <div style="margin-top: 20px;">
-            <h3 style="color: #2d3748;">الملاحظات السريرية (Clinical Notes):</h3>
-            <p><strong>الأمراض المزمنة:</strong> {{ p[6] }}</p>
-            <p><strong>الأدوية الحالية:</strong> {{ p[8] }}</p>
-            <p style="color: #c53030;"><strong>موانع الاستخدام (Contraindications):</strong> {{ p[9] }}</p>
-        </div>
-
-        <div class="protocol-box">
-            <h3>البروتوكول الإسعافي المقترح (Protocol):</h3>
-            <p>{{ p[10] }}</p>
-        </div>
-
-        <button onclick="window.location.href='/'" style="margin-top: 30px; background: #718096; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer;">رجوع للبحث</button>
+    <script>
+        function updateClock() {
+            const now = new Date();
+            document.getElementById('liveClock').innerHTML = "TIME: " + now.toLocaleTimeString();
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+</body><div style="text-align: center; margin-top: 20px; border-top: 2px solid #000; padding-top: 20px;">
+    <img src="{{ url_for('static', filename='logo.png') }}" width="120" alt="SHIELD Logo">
+    
+    <div style="margin-top: 15px;">
+        <h4 style="color: #2c3e50;">التحقق من الهوية الحيوية</h4>
+        <button style="background-color: #f8f9fa; border: 1px solid #dcdcdc; padding: 10px 20px; border-radius: 8px; margin: 5px;">📷 التعرف على الوجه</button>
+        <button style="background-color: #f8f9fa; border: 1px solid #dcdcdc; padding: 10px 20px; border-radius: 8px; margin: 5px;">☝️ بصمة الإصبع</button>
     </div>
-
-</body>
+    
+    <p style="color: red; font-weight: bold; margin-top: 10px;">🚨 تصنيف الحالة: حرجة (Critical)</p>
+</div>
 </html>
